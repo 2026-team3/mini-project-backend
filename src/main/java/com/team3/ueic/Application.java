@@ -1,4 +1,4 @@
-package com.team3.miniproject;
+package com.team3.ueic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
