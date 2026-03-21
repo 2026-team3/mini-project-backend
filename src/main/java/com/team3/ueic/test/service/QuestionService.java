@@ -2,20 +2,21 @@ package com.team3.ueic.test.service;
 
 
 
+import com.team3.ueic.test.dto.AnswerRequest;
 import com.team3.ueic.test.dto.ChoiceResponse;
 import com.team3.ueic.test.dto.QuestionResponse;
+import com.team3.ueic.test.entity.UserAnswer;
 import com.team3.ueic.test.enums.WeakType;
 import com.team3.ueic.test.entity.Choice;
 import com.team3.ueic.test.entity.Question;
 import com.team3.ueic.test.repository.QuestionRepository;
+import com.team3.ueic.test.repository.UserAnswerRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final UserAnswerRepository userAnswerRepository;
 
     // ================== 문제 생성 ==================
     @Transactional
@@ -117,6 +119,55 @@ public class QuestionService {
         }
 
         return response;
+    }
+    // ================== 답안 제출 ==================
+    @Transactional
+    public void submitAnswers(Long userId, List<AnswerRequest> answers) {
+
+        for (AnswerRequest answer : answers) {
+
+            Question question = questionRepository.findById(answer.getQuestionId())
+                    .orElseThrow(() -> new IllegalArgumentException("문제 없음"));
+
+            Choice selectedChoice = question.getChoices().stream()
+                    .filter(c -> c.getId().equals(answer.getChoiceId()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("보기 없음"));
+
+            boolean isCorrect = question.getAnswerChoice().getId()
+                    .equals(answer.getChoiceId());
+
+            UserAnswer ua = new UserAnswer();
+            ua.setUserId(userId);
+            ua.setQuestion(question);
+            ua.setSelectedChoice(selectedChoice);
+            ua.setCorrect(isCorrect);
+
+            userAnswerRepository.save(ua);
+        }
+    }
+    // ================== 취약 분야 분석 ==================
+    public WeakType findWeakType(Long userId) {
+
+        List<UserAnswer> answers = userAnswerRepository.findByUserId(userId);
+
+        Map<WeakType, Integer> wrongCountMap = new HashMap<>();
+
+        for (UserAnswer ua : answers) {
+            if (!ua.isCorrect()) {
+                WeakType type = ua.getQuestion().getWeakType();
+                wrongCountMap.put(type, wrongCountMap.getOrDefault(type, 0) + 1);
+            }
+        }
+
+        if (wrongCountMap.isEmpty()) {
+            return null; // 전부 맞음
+        }
+
+        return wrongCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .get()
+                .getKey();
     }
 }
 
