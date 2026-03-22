@@ -1,6 +1,6 @@
-package com.team3.ueic.test.repository;
+package com.team3.ueic.domain.test.repository;
 
-import com.team3.ueic.test.entity.UserAnswer;
+import com.team3.ueic.domain.test.entity.UserAnswer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

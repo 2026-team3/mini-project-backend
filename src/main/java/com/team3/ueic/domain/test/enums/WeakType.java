@@ -1,4 +1,4 @@
-package com.team3.ueic.test.enums;
+package com.team3.ueic.domain.test.enums;
 
 public enum WeakType {
     SYNONYM, //동의어

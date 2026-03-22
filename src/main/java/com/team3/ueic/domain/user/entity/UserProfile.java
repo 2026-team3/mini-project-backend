@@ -1,7 +1,7 @@
 package com.team3.ueic.domain.user.entity;
 
 import com.team3.ueic.global.entity.BaseTimeEntity;
-import com.team3.ueic.test.enums.WeakType;
+import com.team3.ueic.domain.test.enums.WeakType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

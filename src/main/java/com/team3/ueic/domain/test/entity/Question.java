@@ -1,6 +1,6 @@
-package com.team3.ueic.test.entity;
+package com.team3.ueic.domain.test.entity;
 
-import com.team3.ueic.test.enums.WeakType;
+import com.team3.ueic.domain.test.enums.WeakType;
 import jakarta.persistence.*;
 import lombok.Data;
 

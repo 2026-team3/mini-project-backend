@@ -1,13 +1,13 @@
-package com.team3.ueic.test.controller;
+package com.team3.ueic.domain.test.controller;
 
-import com.team3.ueic.domain.user.entity.User;
-import com.team3.ueic.test.dto.QuestionRequest;
-import com.team3.ueic.test.dto.QuestionResponse;
-import com.team3.ueic.test.dto.SubmitRequest;
+import com.team3.ueic.global.security.CustomUserDetails;
+import com.team3.ueic.domain.test.dto.QuestionRequest;
+import com.team3.ueic.domain.test.dto.QuestionResponse;
+import com.team3.ueic.domain.test.dto.SubmitRequest;
 
-import com.team3.ueic.test.dto.SubmitResponse;
-import com.team3.ueic.test.enums.WeakType;
-import com.team3.ueic.test.service.QuestionService;
+import com.team3.ueic.domain.test.dto.SubmitResponse;
+import com.team3.ueic.domain.test.enums.WeakType;
+import com.team3.ueic.domain.test.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -52,17 +52,18 @@ public class QuestionController {
 
     // ================== 문제 풀기 ==================
     @PostMapping("/submit")
-    public SubmitResponse submit(@AuthenticationPrincipal User user,
+    public SubmitResponse submit(@AuthenticationPrincipal CustomUserDetails userDetails,
                                  @RequestBody SubmitRequest request) {
 
-        if (user == null) {
+        if (userDetails == null) {
             throw new IllegalArgumentException("로그인된 사용자만 접근 가능합니다.");
         }
 
-        // 답안 제출 + 취약 분야 계산 + UserProfile 업데이트
-        WeakType weakType = questionService.submitAnswersAndGetWeakType(user.getId(), request.getAnswers());
+        WeakType weakType = questionService.submitAnswersAndGetWeakType(
+                userDetails.getUserId(),
+                request.getAnswers()
+        );
 
-        //  결과 응답
         if (weakType == null) {
             return new SubmitResponse(true, null, "모든 문제를 맞췄습니다!");
         } else {

@@ -1,9 +1,9 @@
-package com.team3.ueic.test;
+package com.team3.ueic.domain.test;
 
 
 
-import com.team3.ueic.test.dto.QuestionRequest;
-import com.team3.ueic.test.service.QuestionService;
+import com.team3.ueic.domain.test.dto.QuestionRequest;
+import com.team3.ueic.domain.test.service.QuestionService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;

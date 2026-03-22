@@ -1,22 +1,20 @@
-package com.team3.ueic.test.service;
+package com.team3.ueic.domain.test.service;
 
 
 
-import com.team3.ueic.domain.user.entity.PreferredMode;
-import com.team3.ueic.domain.user.entity.User;
 import com.team3.ueic.domain.user.entity.UserProfile;
 import com.team3.ueic.domain.user.repository.UserProfileRepository;
 import com.team3.ueic.domain.user.repository.UserRepository;
-import com.team3.ueic.test.dto.AnswerRequest;
-import com.team3.ueic.test.dto.ChoiceResponse;
-import com.team3.ueic.test.dto.QuestionResponse;
-import com.team3.ueic.test.entity.UserAnswer;
-import com.team3.ueic.test.enums.WeakType;
-import com.team3.ueic.test.entity.Choice;
-import com.team3.ueic.test.entity.Question;
-import com.team3.ueic.test.repository.ChoiceRepository;
-import com.team3.ueic.test.repository.QuestionRepository;
-import com.team3.ueic.test.repository.UserAnswerRepository;
+import com.team3.ueic.domain.test.dto.AnswerRequest;
+import com.team3.ueic.domain.test.dto.ChoiceResponse;
+import com.team3.ueic.domain.test.dto.QuestionResponse;
+import com.team3.ueic.domain.test.entity.UserAnswer;
+import com.team3.ueic.domain.test.enums.WeakType;
+import com.team3.ueic.domain.test.entity.Choice;
+import com.team3.ueic.domain.test.entity.Question;
+import com.team3.ueic.domain.test.repository.ChoiceRepository;
+import com.team3.ueic.domain.test.repository.QuestionRepository;
+import com.team3.ueic.domain.test.repository.UserAnswerRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -181,7 +179,7 @@ public class QuestionService {
         WeakType weakType = findWeakType(userId);
 
         // ================== UserProfile 가져오기 + weakType 업데이트 ==================
-        UserProfile profile = userProfileRepository.findByUserId(userId)
+        UserProfile profile = userProfileRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new IllegalStateException("UserProfile 없음"));
 
         if (weakType != null) {

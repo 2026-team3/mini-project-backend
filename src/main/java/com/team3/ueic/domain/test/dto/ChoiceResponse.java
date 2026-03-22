@@ -1,6 +1,6 @@
-package com.team3.ueic.test.dto;
+package com.team3.ueic.domain.test.dto;
 
-import com.team3.ueic.test.entity.Choice;
+import com.team3.ueic.domain.test.entity.Choice;
 import lombok.Data;
 
 @Data

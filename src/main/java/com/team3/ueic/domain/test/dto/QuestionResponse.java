@@ -1,6 +1,6 @@
-package com.team3.ueic.test.dto;
+package com.team3.ueic.domain.test.dto;
 
-import com.team3.ueic.test.enums.WeakType;
+import com.team3.ueic.domain.test.enums.WeakType;
 import lombok.Data;
 
 import java.util.List;

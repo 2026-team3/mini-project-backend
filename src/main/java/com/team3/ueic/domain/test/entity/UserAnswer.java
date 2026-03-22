@@ -1,4 +1,4 @@
-package com.team3.ueic.test.entity;
+package com.team3.ueic.domain.test.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
