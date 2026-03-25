@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -193,8 +194,16 @@ public class QuestionService {
     public WeakType findWeakType(Long userId) {
         List<UserAnswer> answers = userAnswerRepository.findByUserId(userId);
 
+        // 문제별 최신 기록만
+        Map<Long, UserAnswer> latestByQuestion = answers.stream()
+                .collect(Collectors.toMap(
+                        a -> a.getQuestion().getId(),
+                        Function.identity(),
+                        (existing, replacement) -> replacement.getCreatedAt().isAfter(existing.getCreatedAt()) ? replacement : existing
+                ));
+
         Map<WeakType, Integer> wrongCountMap = new HashMap<>();
-        for (UserAnswer ua : answers) {
+        for (UserAnswer ua : latestByQuestion.values()) {
             if (!ua.isCorrect()) {
                 WeakType type = ua.getQuestion().getWeakType();
                 wrongCountMap.put(type, wrongCountMap.getOrDefault(type, 0) + 1);
@@ -207,5 +216,24 @@ public class QuestionService {
                 .max(Map.Entry.comparingByValue())
                 .get()
                 .getKey();
+    }
+    // ================== 분야별 맞춘 개수 조회 ==================
+    public Map<WeakType, Long> getCorrectCountByType(Long userId) {
+        List<Object[]> results = userAnswerRepository.countLatestCorrectByType(userId);
+
+        Map<WeakType, Long> map = new EnumMap<>(WeakType.class);
+
+        // 초기화
+        for (WeakType type : WeakType.values()) {
+            map.put(type, 0L);
+        }
+
+        for (Object[] row : results) {
+            WeakType type = (WeakType) row[0];
+            Long count = (Long) row[1];
+            map.put(type, count);
+        }
+
+        return map;
     }
 }
