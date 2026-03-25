@@ -12,3 +12,5 @@ jwt:
   secret: 7f3c9d8e2b1a4f6c9a0e3b2d7c8f1a6b9d3e5c7f2a1b4c6d8e9f0a1b2c3d4e5f
   access-token-expiration: 1800000
   refresh-token-expiration: 1209600000
+openai:
+  api-key: ${OPENAI_API_KEY}

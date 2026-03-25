@@ -43,6 +43,9 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserAvailableTime> availableTimes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserStudyStyleTag> studyStyleTags = new ArrayList<>();
+
     @Builder
     public User(String email, String password, String name, String phoneNumber) {
         this.email = email;
@@ -59,6 +62,11 @@ public class User extends BaseTimeEntity {
     public void addAvailableTime(UserAvailableTime availableTime) {
         this.availableTimes.add(availableTime);
         availableTime.setUser(this);
+    }
+
+    public void addStudyStyleTag(UserStudyStyleTag studyStyleTag) {
+        this.studyStyleTags.add(studyStyleTag);
+        studyStyleTag.setUser(this);
     }
 
     public void updateRefreshToken(String refreshToken, LocalDateTime refreshTokenExpiredAt) {
