@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/questions")
 @RequiredArgsConstructor
@@ -69,5 +72,27 @@ public class QuestionController {
         } else {
             return new SubmitResponse(false, weakType, "취약 분야 분석 완료");
         }
+    }
+
+    // ================== 분야별 맞춘 개수 조회 ==================
+    @GetMapping("/correct-count")
+    public Map<String, Long> getCorrectCount(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인된 사용자만 접근 가능합니다.");
+        }
+
+        Map<WeakType, Long> result =
+                questionService.getCorrectCountByType(userDetails.getUserId());
+
+        // label로 변환
+        Map<String, Long> response = new HashMap<>();
+
+        for (Map.Entry<WeakType, Long> entry : result.entrySet()) {
+            response.put(entry.getKey().getLabel(), entry.getValue());
+        }
+
+        return response;
     }
 }

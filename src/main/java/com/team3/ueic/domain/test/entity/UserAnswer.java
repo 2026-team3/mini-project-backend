@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -22,4 +24,12 @@ public class UserAnswer {
     private Choice selectedChoice;
 
     private boolean correct;
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
