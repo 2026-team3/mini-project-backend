@@ -53,7 +53,6 @@ public class QuestionController {
         return questionService.getRandomQuestions(countPerType);
     }
 
-    // ================== 문제 풀기 ==================
     @PostMapping("/submit")
     public SubmitResponse submit(@AuthenticationPrincipal CustomUserDetails userDetails,
                                  @RequestBody SubmitRequest request) {
@@ -62,37 +61,9 @@ public class QuestionController {
             throw new IllegalArgumentException("로그인된 사용자만 접근 가능합니다.");
         }
 
-        WeakType weakType = questionService.submitAnswersAndGetWeakType(
+        return questionService.submitAnswersAndAnalyze(
                 userDetails.getUserId(),
                 request.getAnswers()
         );
-
-        if (weakType == null) {
-            return new SubmitResponse(true, null, "모든 문제를 맞췄습니다!");
-        } else {
-            return new SubmitResponse(false, weakType, "취약 분야 분석 완료");
-        }
-    }
-
-    // ================== 분야별 맞춘 개수 조회 ==================
-    @GetMapping("/correct-count")
-    public Map<String, Long> getCorrectCount(
-            @AuthenticationPrincipal CustomUserDetails userDetails) {
-
-        if (userDetails == null) {
-            throw new IllegalArgumentException("로그인된 사용자만 접근 가능합니다.");
-        }
-
-        Map<WeakType, Long> result =
-                questionService.getCorrectCountByType(userDetails.getUserId());
-
-        // label로 변환
-        Map<String, Long> response = new HashMap<>();
-
-        for (Map.Entry<WeakType, Long> entry : result.entrySet()) {
-            response.put(entry.getKey().getLabel(), entry.getValue());
-        }
-
-        return response;
     }
 }

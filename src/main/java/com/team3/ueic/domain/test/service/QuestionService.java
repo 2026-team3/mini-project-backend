@@ -2,6 +2,7 @@ package com.team3.ueic.domain.test.service;
 
 
 
+import com.team3.ueic.domain.test.dto.SubmitResponse;
 import com.team3.ueic.domain.user.entity.UserProfile;
 import com.team3.ueic.domain.user.repository.UserProfileRepository;
 import com.team3.ueic.domain.user.repository.UserRepository;
@@ -57,12 +58,12 @@ public class QuestionService {
         for (String choiceContent : choiceContents) {
             Choice choice = new Choice();
             choice.setContent(choiceContent);
-            choice.setQuestion(question); // 연관관계 설정
+            choice.setQuestion(question);
             choices.add(choice);
         }
 
         question.setChoices(choices);
-        question.setAnswerChoice(choices.get(answerIndex)); // 정답 설정
+        question.setAnswerChoice(choices.get(answerIndex));
 
         return questionRepository.save(question).getId();
     }
@@ -76,8 +77,7 @@ public class QuestionService {
 
     // ================== 유형별 조회 ==================
     public List<QuestionResponse> getQuestionsByType(WeakType weakType) {
-        List<Question> questions = questionRepository.findByWeakType(weakType);
-        return questions.stream()
+        return questionRepository.findByWeakType(weakType).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
@@ -104,7 +104,7 @@ public class QuestionService {
         return result;
     }
 
-    // ================== 엔티티 → DTO 변환 ==================
+    // ================== 엔티티 → DTO ==================
     private QuestionResponse toResponse(Question question) {
         QuestionResponse response = new QuestionResponse();
         response.setId(question.getId());
@@ -114,6 +114,7 @@ public class QuestionService {
         List<ChoiceResponse> choiceResponses = question.getChoices().stream()
                 .map(c -> new ChoiceResponse(c.getId(), c.getContent()))
                 .collect(Collectors.toList());
+
         response.setChoices(choiceResponses);
 
         if (question.getAnswerChoice() != null) {
@@ -126,7 +127,7 @@ public class QuestionService {
         return response;
     }
 
-    // ================== DTO 변환 + 보기 랜덤화 ==================
+    // ================== 보기 랜덤화 ==================
     private QuestionResponse toResponseShuffledChoices(Question question) {
         QuestionResponse response = toResponse(question);
 
@@ -137,9 +138,11 @@ public class QuestionService {
         return response;
     }
 
-    // ================== 답안 제출 + 취약 유형 반영 ==================
+    // ================== 제출 + 채점 + 분석 ==================
     @Transactional
-    public WeakType submitAnswersAndGetWeakType(Long userId, List<AnswerRequest> answers) {
+    public SubmitResponse submitAnswersAndAnalyze(Long userId, List<AnswerRequest> answers) {
+
+        int correctCount = 0;
 
         for (AnswerRequest answer : answers) {
 
@@ -156,17 +159,17 @@ public class QuestionService {
             boolean isCorrect = question.getAnswerChoice().getId()
                     .equals(answer.getChoiceId());
 
+            if (isCorrect) correctCount++;
+
             // ================== 중복 답안 처리 ==================
             UserAnswer existingAnswer = userAnswerRepository
                     .findByUserIdAndQuestionId(userId, answer.getQuestionId())
                     .orElse(null);
 
             if (existingAnswer != null) {
-                // 기존 답안 업데이트 (JPA 관리 엔티티)
                 existingAnswer.setSelectedChoice(selectedChoice);
                 existingAnswer.setCorrect(isCorrect);
             } else {
-                // 새로운 답안 저장
                 UserAnswer ua = new UserAnswer();
                 ua.setUserId(userId);
                 ua.setQuestion(question);
@@ -176,10 +179,10 @@ public class QuestionService {
             }
         }
 
-        // ================== 취약 유형 계산 ==================
+        // ================== 취약 유형 ==================
         WeakType weakType = findWeakType(userId);
 
-        // ================== UserProfile 가져오기 + weakType 업데이트 ==================
+        // ================== 프로필 업데이트 ==================
         UserProfile profile = userProfileRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new IllegalStateException("UserProfile 없음"));
 
@@ -187,22 +190,44 @@ public class QuestionService {
             profile.updateWeakType(weakType);
         }
 
-        return weakType;
+        // ================== 분야별 맞춘 개수 ==================
+        Map<WeakType, Long> result = getCorrectCountByType(userId);
+
+        Map<String, Long> correctCountByType = new HashMap<>();
+        for (Map.Entry<WeakType, Long> entry : result.entrySet()) {
+            correctCountByType.put(entry.getKey().getLabel(), entry.getValue());
+        }
+
+        int totalCount = answers.size();
+
+        String message = (correctCount == totalCount)
+                ? "모든 문제를 맞췄습니다!"
+                : "취약 분야 분석 완료";
+
+        return new SubmitResponse(
+                correctCount,
+                totalCount,
+                weakType,
+                message,
+                correctCountByType
+        );
     }
 
     // ================== 취약 분야 분석 ==================
     public WeakType findWeakType(Long userId) {
         List<UserAnswer> answers = userAnswerRepository.findByUserId(userId);
 
-        // 문제별 최신 기록만
         Map<Long, UserAnswer> latestByQuestion = answers.stream()
                 .collect(Collectors.toMap(
                         a -> a.getQuestion().getId(),
                         Function.identity(),
-                        (existing, replacement) -> replacement.getCreatedAt().isAfter(existing.getCreatedAt()) ? replacement : existing
+                        (existing, replacement) ->
+                                replacement.getCreatedAt().isAfter(existing.getCreatedAt())
+                                        ? replacement : existing
                 ));
 
         Map<WeakType, Integer> wrongCountMap = new HashMap<>();
+
         for (UserAnswer ua : latestByQuestion.values()) {
             if (!ua.isCorrect()) {
                 WeakType type = ua.getQuestion().getWeakType();
@@ -217,13 +242,13 @@ public class QuestionService {
                 .get()
                 .getKey();
     }
-    // ================== 분야별 맞춘 개수 조회 ==================
+
+    // ================== 분야별 맞춘 개수 ==================
     public Map<WeakType, Long> getCorrectCountByType(Long userId) {
         List<Object[]> results = userAnswerRepository.countLatestCorrectByType(userId);
 
         Map<WeakType, Long> map = new EnumMap<>(WeakType.class);
 
-        // 초기화
         for (WeakType type : WeakType.values()) {
             map.put(type, 0L);
         }
