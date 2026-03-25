@@ -8,20 +8,22 @@ import com.team3.ueic.domain.auth.dto.request.SignupRequestDto;
 import com.team3.ueic.domain.auth.dto.response.LoginResponseDto;
 import com.team3.ueic.domain.auth.dto.response.ReissueResponseDto;
 import com.team3.ueic.domain.auth.dto.response.SignupResponseDto;
-import com.team3.ueic.domain.user.entity.User;
-import com.team3.ueic.domain.user.entity.UserAvailableTime;
-import com.team3.ueic.domain.user.entity.UserProfile;
+import com.team3.ueic.domain.user.entity.*;
 import com.team3.ueic.domain.user.repository.UserRepository;
+import com.team3.ueic.domain.user.service.StudyStyleTagExtractor;
 import com.team3.ueic.global.exception.CustomException;
 import com.team3.ueic.global.exception.ErrorCode;
 import com.team3.ueic.global.security.JwtProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -30,6 +32,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final StudyStyleTagExtractor studyStyleTagExtractor;
 
     public SignupResult signup(SignupRequestDto requestDto) {
         validateSignup(requestDto);
@@ -56,6 +59,23 @@ public class AuthService {
             );
         }
 
+        List<StudyStyleTagType> extractedTags;
+
+        try {
+            extractedTags = studyStyleTagExtractor.extractTags(requestDto.getStudyStyleDescription());
+        } catch (Exception e) {
+            extractedTags = List.of();
+            log.error("OpenAI 태그 추출 실패", e);
+        }
+
+        for (StudyStyleTagType tag : extractedTags) {
+            user.addStudyStyleTag(
+                    UserStudyStyleTag.builder()
+                            .tag(tag)
+                            .build()
+            );
+        }
+
         User savedUser = userRepository.save(user);
 
         String accessToken = jwtProvider.createAccessToken(savedUser.getId(), savedUser.getEmail());
@@ -69,6 +89,7 @@ public class AuthService {
                 .userId(savedUser.getId())
                 .email(savedUser.getEmail())
                 .name(savedUser.getName())
+                .styleTags(extractedTags)
                 .build();
 
         return SignupResult.builder()

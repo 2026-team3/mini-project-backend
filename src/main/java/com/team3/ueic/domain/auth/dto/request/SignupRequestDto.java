@@ -39,4 +39,7 @@ public class SignupRequestDto {
 
     @NotNull(message = "목표 점수는 필수입니다.")
     private Integer targetScore;
+
+    @NotBlank(message = "원하는 스터디 스타일 설명은 필수입니다.")
+    private String studyStyleDescription;
 }
