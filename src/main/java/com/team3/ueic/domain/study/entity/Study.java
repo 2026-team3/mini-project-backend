@@ -1,5 +1,6 @@
 package com.team3.ueic.domain.study.entity;
 
+import com.team3.ueic.domain.test.enums.WeakType;
 import com.team3.ueic.domain.user.entity.PreferredMode;
 import com.team3.ueic.domain.user.entity.User;
 import com.team3.ueic.global.entity.BaseTimeEntity;
@@ -48,13 +49,19 @@ public class Study extends BaseTimeEntity {
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudyMember> members = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private WeakType weakType; // 스터디 목표 취약분야
+
+
     @Builder
-    public Study(String studyName, PreferredMode preferredMode, Integer maxMembers, Integer targetScore, User leader) {
+    public Study(String studyName, PreferredMode preferredMode, Integer maxMembers, Integer targetScore, User leader,WeakType weakType) {
         this.studyName = studyName;
         this.preferredMode = preferredMode;
         this.maxMembers = maxMembers;
         this.targetScore = targetScore;
         this.leader = leader;
+        this.weakType=weakType;
     }
 
     public void addAvailableTime(StudyAvailableTime availableTime) {

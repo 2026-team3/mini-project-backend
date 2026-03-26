@@ -1,5 +1,6 @@
 package com.team3.ueic.domain.study.dto.request;
 
+import com.team3.ueic.domain.test.enums.WeakType;
 import com.team3.ueic.domain.user.entity.AvailableTime;
 import com.team3.ueic.domain.user.entity.PreferredMode;
 import jakarta.validation.constraints.*;
@@ -31,4 +32,7 @@ public class CreateStudyRequestDto {
 
     @NotBlank(message = "스터디 스타일 설명은 필수입니다.")
     private String studyStyleDescription;
+
+    @NotNull(message = "스터디 목표 취약분야는 필수입니다.")
+    private WeakType weakType; // 추가
 }
