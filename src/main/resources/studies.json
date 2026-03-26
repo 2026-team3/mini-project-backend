@@ -1,6 +1,6 @@
 [
   {
-    "studyName": "문법 집중 스터디 A",
+    "studyName": "문법 집중 스터디",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 750,
@@ -11,7 +11,7 @@
     "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "어휘 암기 챌린지 B",
+    "studyName": "어휘 암기 챌린지",
     "preferredMode": "ONLINE",
     "maxMembers": 6,
     "targetScore": 700,
@@ -22,7 +22,7 @@
     "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "RC 문제풀이 스터디 C",
+    "studyName": "RC 문제풀이 스터디",
     "preferredMode": "OFFLINE",
     "maxMembers": 5,
     "targetScore": 820,
@@ -33,7 +33,7 @@
     "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "문장 삽입 집중반 D",
+    "studyName": "문장 삽입 집중반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 780,
@@ -44,7 +44,7 @@
     "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "동의어 문제 대비반 E",
+    "studyName": "동의어 문제 대비반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 760,
@@ -55,7 +55,7 @@
     "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "고득점 목표 스터디 F",
+    "studyName": "고득점 목표 스터디",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 900,
@@ -66,7 +66,7 @@
     "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "어휘 마스터반 G",
+    "studyName": "어휘 마스터반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 720,
@@ -77,7 +77,7 @@
     "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "RC 실전 문제풀이 H",
+    "studyName": "RC 실전 문제풀이",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 830,
@@ -88,7 +88,7 @@
     "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "문법 실력 향상반 I",
+    "studyName": "문법 실력 향상반",
     "preferredMode": "BOTH",
     "maxMembers": 6,
     "targetScore": 760,
@@ -99,7 +99,7 @@
     "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "동의어 집중 스터디 J",
+    "studyName": "동의어 집중 스터디",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 740,
@@ -110,7 +110,7 @@
     "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "주말 모의고사반 K",
+    "studyName": "주말 모의고사반",
     "preferredMode": "OFFLINE",
     "maxMembers": 6,
     "targetScore": 850,
@@ -121,7 +121,7 @@
     "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "어휘 데일리 체크반 L",
+    "studyName": "어휘 데일리 체크반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 710,
@@ -132,7 +132,7 @@
     "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "문장 삽입 실전반 M",
+    "studyName": "문장 삽입 실전반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 800,
@@ -143,7 +143,7 @@
     "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "RC 집중 훈련반 N",
+    "studyName": "RC 집중 훈련반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 820,
@@ -154,7 +154,7 @@
     "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "문법 기초 스터디 O",
+    "studyName": "문법 기초 스터디",
     "preferredMode": "BOTH",
     "maxMembers": 6,
     "targetScore": 680,
@@ -165,7 +165,7 @@
     "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "어휘 스피드 암기반 P",
+    "studyName": "어휘 스피드 암기반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 720,
@@ -176,7 +176,7 @@
     "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "동의어 문제풀이반 Q",
+    "studyName": "동의어 문제풀이반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 760,
@@ -187,7 +187,7 @@
     "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "RC 고득점 준비반 R",
+    "studyName": "RC 고득점 준비반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 900,
@@ -198,7 +198,7 @@
     "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "문장 삽입 마스터반 S",
+    "studyName": "문장 삽입 마스터반",
     "preferredMode": "OFFLINE",
     "maxMembers": 5,
     "targetScore": 830,
@@ -209,7 +209,7 @@
     "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
-    "studyName": "문법 데일리 퀴즈반 T",
+    "studyName": "문법 데일리 퀴즈반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 750,
