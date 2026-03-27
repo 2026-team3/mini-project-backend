@@ -2,6 +2,7 @@ package com.team3.ueic.domain.match;
 
 import com.team3.ueic.domain.study.dto.response.CreateStudyResponseDto;
 import com.team3.ueic.domain.study.entity.Study;
+import com.team3.ueic.domain.study.entity.StudyAvailableTime;
 import com.team3.ueic.domain.study.entity.StudyStyleTag;
 import com.team3.ueic.domain.study.repository.StudyRepository;
 import com.team3.ueic.domain.test.enums.WeakType;
@@ -122,12 +123,24 @@ public class MatchService {
     }
 
     private CreateStudyResponseDto toResponseDto(StudyScoreDto dto) {
+        Study study = dto.getStudy();
+
         return CreateStudyResponseDto.builder()
-                .studyId(dto.getStudy().getId())
-                .studyName(dto.getStudy().getStudyName())
-                .leaderId(dto.getStudy().getLeader().getId())
-                .leaderName(dto.getStudy().getLeader().getName())
+                .studyId(study.getId())
+                .studyName(study.getStudyName())
+                .leaderId(study.getLeader().getId())
+                .leaderName(study.getLeader().getName())
                 .styleTags(new ArrayList<>(dto.getTags()))
+                .preferredMode(study.getPreferredMode())
+                .maxMembers(study.getMaxMembers())
+                .targetScore(study.getTargetScore())
+                .weakType(study.getWeakType())
+                .availableTimes(
+                        study.getAvailableTimes().stream()
+                                .map(StudyAvailableTime::getAvailableTime)
+                                .toList()
+                )
+                .currentMemberCount(study.getMembers().size())
                 .build();
     }
 
