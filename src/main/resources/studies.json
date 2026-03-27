@@ -4,66 +4,66 @@
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 750,
-    "leaderId": 3,
+    "leaderId": 1,
     "weakType": "GRAMMAR",
     "availableTimes": ["WEEKDAY_EVENING"],
     "studyStyleTags": ["HARD", "HOMEWORK"],
-    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 1, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "어휘 암기 챌린지",
     "preferredMode": "ONLINE",
     "maxMembers": 6,
     "targetScore": 700,
-    "leaderId": 4,
+    "leaderId": 2,
     "weakType": "VOCABULARY",
     "availableTimes": ["WEEKDAY_MORNING"],
     "studyStyleTags": ["VOCAB_FOCUS", "DAILY_CHECK"],
-    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 2, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "RC 문제풀이 스터디",
     "preferredMode": "OFFLINE",
     "maxMembers": 5,
     "targetScore": 820,
-    "leaderId": 5,
+    "leaderId": 3,
     "weakType": "CONTENT_MATCH",
     "availableTimes": ["WEEKEND_MORNING"],
     "studyStyleTags": ["RC_FOCUS", "MOCK_TEST"],
-    "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "문장 삽입 집중반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 780,
-    "leaderId": 3,
+    "leaderId": 4,
     "weakType": "SENTENCE_INSERT",
     "availableTimes": ["WEEKDAY_EVENING"],
     "studyStyleTags": ["HOMEWORK", "FEEDBACK_ACTIVE"],
-    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "동의어 문제 대비반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 760,
-    "leaderId": 4,
+    "leaderId": 1,
     "weakType": "SYNONYM",
     "availableTimes": ["WEEKDAY_MORNING"],
     "studyStyleTags": ["CASUAL", "WEEKLY_CHECK"],
-    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 1, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "고득점 목표 스터디",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 900,
-    "leaderId": 5,
+    "leaderId": 2,
     "weakType": "CONTENT_MATCH",
     "availableTimes": ["WEEKDAY_EVENING", "WEEKEND_EVENING"],
     "studyStyleTags": ["HARD", "ATTENDANCE_STRICT"],
-    "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 2, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "어휘 마스터반",
@@ -92,110 +92,110 @@
     "preferredMode": "BOTH",
     "maxMembers": 6,
     "targetScore": 760,
-    "leaderId": 5,
+    "leaderId": 1,
     "weakType": "GRAMMAR",
     "availableTimes": ["WEEKEND_MORNING"],
     "studyStyleTags": ["HOMEWORK", "WEEKLY_CHECK"],
-    "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 1, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "동의어 집중 스터디",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 740,
-    "leaderId": 3,
+    "leaderId": 2,
     "weakType": "SYNONYM",
     "availableTimes": ["WEEKDAY_EVENING"],
     "studyStyleTags": ["CASUAL"],
-    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 2, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "주말 모의고사반",
     "preferredMode": "OFFLINE",
     "maxMembers": 6,
     "targetScore": 850,
-    "leaderId": 4,
+    "leaderId": 3,
     "weakType": "CONTENT_MATCH",
     "availableTimes": ["WEEKEND_MORNING"],
     "studyStyleTags": ["MOCK_TEST", "ATTENDANCE_STRICT"],
-    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "어휘 데일리 체크반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 710,
-    "leaderId": 5,
+    "leaderId": 4,
     "weakType": "VOCABULARY",
     "availableTimes": ["WEEKDAY_MORNING"],
     "studyStyleTags": ["VOCAB_FOCUS", "DAILY_CHECK"],
-    "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "문장 삽입 실전반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 800,
-    "leaderId": 3,
+    "leaderId": 1,
     "weakType": "SENTENCE_INSERT",
     "availableTimes": ["WEEKDAY_EVENING"],
     "studyStyleTags": ["HOMEWORK", "FEEDBACK_ACTIVE"],
-    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 1, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "RC 집중 훈련반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 820,
-    "leaderId": 4,
+    "leaderId": 2,
     "weakType": "CONTENT_MATCH",
     "availableTimes": ["WEEKDAY_EVENING"],
     "studyStyleTags": ["RC_FOCUS", "MOCK_TEST"],
-    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 2, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "문법 기초 스터디",
     "preferredMode": "BOTH",
     "maxMembers": 6,
     "targetScore": 680,
-    "leaderId": 5,
+    "leaderId": 3,
     "weakType": "GRAMMAR",
     "availableTimes": ["WEEKDAY_MORNING"],
     "studyStyleTags": ["CASUAL", "WEEKLY_CHECK"],
-    "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "어휘 스피드 암기반",
     "preferredMode": "ONLINE",
     "maxMembers": 5,
     "targetScore": 720,
-    "leaderId": 3,
+    "leaderId": 4,
     "weakType": "VOCABULARY",
     "availableTimes": ["WEEKDAY_EVENING"],
     "studyStyleTags": ["VOCAB_FOCUS", "DAILY_CHECK"],
-    "members": [{ "userId": 3, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "동의어 문제풀이반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 760,
-    "leaderId": 4,
+    "leaderId": 1,
     "weakType": "SYNONYM",
     "availableTimes": ["WEEKDAY_MORNING"],
     "studyStyleTags": ["HOMEWORK"],
-    "members": [{ "userId": 4, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 1, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "RC 고득점 준비반",
     "preferredMode": "ONLINE",
     "maxMembers": 4,
     "targetScore": 900,
-    "leaderId": 5,
+    "leaderId": 2,
     "weakType": "CONTENT_MATCH",
     "availableTimes": ["WEEKEND_EVENING"],
     "studyStyleTags": ["HARD", "ATTENDANCE_STRICT"],
-    "members": [{ "userId": 5, "role": "LEADER", "status": "ACTIVE" }]
+    "members": [{ "userId": 2, "role": "LEADER", "status": "ACTIVE" }]
   },
   {
     "studyName": "문장 삽입 마스터반",
