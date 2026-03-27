@@ -61,7 +61,7 @@ public class Study extends BaseTimeEntity {
         this.maxMembers = maxMembers;
         this.targetScore = targetScore;
         this.leader = leader;
-        this.weakType=weakType;
+        this.weakType = weakType;
     }
 
     public void addAvailableTime(StudyAvailableTime availableTime) {
