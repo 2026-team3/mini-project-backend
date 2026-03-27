@@ -36,6 +36,7 @@ public class StudyService {
                 .preferredMode(requestDto.getPreferredMode())
                 .maxMembers(requestDto.getMaxMembers())
                 .targetScore(requestDto.getTargetScore())
+                .weakType(requestDto.getWeakType())
                 .leader(leader)
                 .build();
 
@@ -78,6 +79,16 @@ public class StudyService {
                 .leaderId(savedStudy.getLeader().getId())
                 .leaderName(savedStudy.getLeader().getName())
                 .styleTags(extractedTags)
+                .preferredMode(savedStudy.getPreferredMode())
+                .maxMembers(savedStudy.getMaxMembers())
+                .targetScore(savedStudy.getTargetScore())
+                .availableTimes(
+                        savedStudy.getAvailableTimes().stream()
+                                .map(StudyAvailableTime::getAvailableTime)
+                                .toList()
+                )
+                .weakType(savedStudy.getWeakType())
+                .currentMemberCount(savedStudy.getMembers().size())
                 .build();
     }
 }
