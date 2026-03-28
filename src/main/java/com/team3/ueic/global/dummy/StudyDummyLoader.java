@@ -80,11 +80,11 @@ public class StudyDummyLoader implements CommandLineRunner {
                             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 userId: " + memberDto.getUserId()));
 
                     StudyMember member = StudyMember.builder()
+                            .user(user)
                             .role(StudyMemberRole.valueOf(memberDto.getRole()))
                             .status(StudyMemberStatus.valueOf(memberDto.getStatus()))
                             .build();
 
-                    member.setUser(user);
                     study.addMember(member);
                 }
             }

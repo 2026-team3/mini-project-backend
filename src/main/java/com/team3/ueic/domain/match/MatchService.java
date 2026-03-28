@@ -3,7 +3,9 @@ package com.team3.ueic.domain.match;
 import com.team3.ueic.domain.study.dto.response.CreateStudyResponseDto;
 import com.team3.ueic.domain.study.entity.Study;
 import com.team3.ueic.domain.study.entity.StudyAvailableTime;
+import com.team3.ueic.domain.study.entity.StudyMemberStatus;
 import com.team3.ueic.domain.study.entity.StudyStyleTag;
+import com.team3.ueic.domain.study.repository.StudyMemberRepository;
 import com.team3.ueic.domain.study.repository.StudyRepository;
 import com.team3.ueic.domain.test.enums.WeakType;
 import com.team3.ueic.domain.user.entity.StudyStyleTagType;
@@ -22,6 +24,7 @@ public class MatchService {
 
     private final StudyRepository studyRepository;
     private final UserProfileRepository userProfileRepository;
+    private final StudyMemberRepository studyMemberRepository;
 
 
     // 취약분야 + 스타일태그 추천
@@ -140,7 +143,9 @@ public class MatchService {
                                 .map(StudyAvailableTime::getAvailableTime)
                                 .toList()
                 )
-                .currentMemberCount(study.getMembers().size())
+                .currentMemberCount(
+                        studyMemberRepository.countByStudyAndStatus(study, StudyMemberStatus.ACTIVE)
+                )
                 .build();
     }
 

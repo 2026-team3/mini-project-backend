@@ -17,7 +17,15 @@ public enum ErrorCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "A001", "유효하지 않은 토큰입니다."),
     EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "A002", "리프레시 토큰이 만료되었습니다."),
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "A003", "저장된 리프레시 토큰이 없습니다."),
-    REFRESH_TOKEN_MISMATCH(HttpStatus.UNAUTHORIZED, "A004", "리프레시 토큰이 일치하지 않습니다.");
+    REFRESH_TOKEN_MISMATCH(HttpStatus.UNAUTHORIZED, "A004", "리프레시 토큰이 일치하지 않습니다."),
+
+    STUDY_NOT_FOUND(HttpStatus.NOT_FOUND, "S001", "스터디를 찾을 수 없습니다."),
+    STUDY_APPLICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "S002", "스터디 신청을 찾을 수 없습니다."),
+    STUDY_ALREADY_APPLIED(HttpStatus.BAD_REQUEST, "S003", "이미 신청했거나 멤버입니다."),
+    STUDY_LEADER_CANNOT_APPLY(HttpStatus.BAD_REQUEST, "S004", "방장은 스터디에 신청할 수 없습니다."),
+    STUDY_ACCESS_DENIED(HttpStatus.FORBIDDEN, "S005", "스터디에 대한 권한이 없습니다."),
+    STUDY_APPLICATION_ALREADY_PROCESSED(HttpStatus.BAD_REQUEST, "S006", "이미 처리된 신청입니다."),
+    STUDY_FULL(HttpStatus.BAD_REQUEST, "S007", "스터디 정원이 초과되었습니다.");
 
     private final HttpStatus status;
     private final String code;
