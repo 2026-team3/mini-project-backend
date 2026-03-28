@@ -51,11 +51,11 @@ public class Study extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private WeakType weakType; // 스터디 목표 취약분야
-
+    private WeakType weakType;
 
     @Builder
-    public Study(String studyName, PreferredMode preferredMode, Integer maxMembers, Integer targetScore, User leader,WeakType weakType) {
+    public Study(String studyName, PreferredMode preferredMode, Integer maxMembers,
+                 Integer targetScore, User leader, WeakType weakType) {
         this.studyName = studyName;
         this.preferredMode = preferredMode;
         this.maxMembers = maxMembers;
@@ -76,6 +76,6 @@ public class Study extends BaseTimeEntity {
 
     public void addMember(StudyMember member) {
         this.members.add(member);
-        member.setStudy(this);
+        member.assignStudy(this);
     }
 }

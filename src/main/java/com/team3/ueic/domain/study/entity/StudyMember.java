@@ -40,16 +40,22 @@ public class StudyMember extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public StudyMember(StudyMemberRole role, StudyMemberStatus status) {
+    public StudyMember(StudyMemberRole role, StudyMemberStatus status, Study study, User user) {
         this.role = role;
         this.status = status;
+        this.study = study;
+        this.user = user;
     }
 
-    public void setStudy(Study study) {
+    public void assignStudy(Study study) {
         this.study = study;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void approve() {
+        this.status = StudyMemberStatus.ACTIVE;
+    }
+
+    public void reject() {
+        this.status = StudyMemberStatus.REJECTED;
     }
 }

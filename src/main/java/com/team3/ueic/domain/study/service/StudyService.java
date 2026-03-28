@@ -41,10 +41,11 @@ public class StudyService {
                 .build();
 
         StudyMember leaderMember = StudyMember.builder()
+                .user(leader)
                 .role(StudyMemberRole.LEADER)
                 .status(StudyMemberStatus.ACTIVE)
                 .build();
-        leaderMember.setUser(leader);
+
         study.addMember(leaderMember);
 
         for (var time : requestDto.getAvailableTimes()) {
