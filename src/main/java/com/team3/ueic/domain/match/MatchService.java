@@ -39,6 +39,7 @@ public class MatchService {
         List<Study> allStudies = studyRepository.findAllWithLeaderAndTags();
 
         return allStudies.stream()
+                .filter(this::isRecruiting)
                 .map(study -> {
                     Set<StudyStyleTagType> studyTags = study.getStudyStyleTags().stream()
                             .map(StudyStyleTag::getTag)
@@ -50,6 +51,11 @@ public class MatchService {
                 .sorted(Comparator.comparingDouble(StudyScoreDto::getScore).reversed())
                 .map(this::toResponseDto)
                 .toList();
+    }
+
+    private boolean isRecruiting(Study study) {
+        int activeCount = studyMemberRepository.countByStudyAndStatus(study, StudyMemberStatus.ACTIVE);
+        return activeCount < study.getMaxMembers();
     }
 
     private double calculateWeakTypeScore(WeakType userWeakType,
@@ -83,6 +89,7 @@ public class MatchService {
         List<Study> allStudies = studyRepository.findAllWithLeaderAndTags();
 
         return allStudies.stream()
+                .filter(this::isRecruiting)
                 .map(study -> {
                     Set<StudyStyleTagType> studyTags = study.getStudyStyleTags().stream()
                             .map(StudyStyleTag::getTag)
