@@ -58,4 +58,8 @@ public class StudyMember extends BaseTimeEntity {
     public void reject() {
         this.status = StudyMemberStatus.REJECTED;
     }
+
+    public void remove() {
+        this.status = StudyMemberStatus.REMOVED;
+    }
 }
