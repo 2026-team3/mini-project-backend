@@ -2,6 +2,7 @@ package com.team3.ueic.domain.study.service;
 
 import com.team3.ueic.domain.study.dto.request.CreateStudyRequestDto;
 import com.team3.ueic.domain.study.dto.response.CreateStudyResponseDto;
+import com.team3.ueic.domain.study.dto.response.MyParticipatingStudyResponseDto;
 import com.team3.ueic.domain.study.dto.response.StudyDetailResponseDto;
 import com.team3.ueic.domain.study.dto.response.StudyMemberResponseDto;
 import com.team3.ueic.domain.study.entity.*;
@@ -144,5 +145,77 @@ public class StudyService {
                         .role(member.getRole())
                         .build())
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<MyParticipatingStudyResponseDto> getMyParticipatingStudies(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        List<StudyMember> studyMembers =
+                studyMemberRepository.findByUserAndStatus(user, StudyMemberStatus.ACTIVE);
+
+        return studyMembers.stream()
+                .map(studyMember -> {
+                    Study study = studyMember.getStudy();
+
+                    Integer currentMemberCount =
+                            studyMemberRepository.countByStudyAndStatus(study, StudyMemberStatus.ACTIVE);
+
+                    return MyParticipatingStudyResponseDto.builder()
+                            .studyId(study.getId())
+                            .studyName(study.getStudyName())
+                            .leaderName(study.getLeader().getName())
+                            .preferredMode(study.getPreferredMode())
+                            .targetScore(study.getTargetScore())
+                            .maxMembers(study.getMaxMembers())
+                            .currentMemberCount(currentMemberCount)
+                            .weakType(study.getWeakType())
+                            .role(studyMember.getRole())
+                            .build();
+                })
+                .toList();
+    }
+
+    @Transactional
+    public void leaveStudy(Long studyId, Long userId) {
+
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        StudyMember studyMember = studyMemberRepository.findByStudyAndUser(study, user)
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDY_MEMBER_NOT_FOUND));
+
+        if (studyMember.getStatus() != StudyMemberStatus.ACTIVE) {
+            throw new CustomException(ErrorCode.INVALID_STUDY_MEMBER_STATUS);
+        }
+
+        if (studyMember.getRole() == StudyMemberRole.LEADER) {
+            throw new CustomException(ErrorCode.LEADER_CANNOT_LEAVE_STUDY);
+        }
+
+        studyMember.remove();
+    }
+
+    @Transactional
+    public void deleteStudy(Long studyId, Long userId) {
+
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDY_NOT_FOUND));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        StudyMember studyMember = studyMemberRepository.findByStudyAndUser(study, user)
+                .orElseThrow(() -> new CustomException(ErrorCode.STUDY_MEMBER_NOT_FOUND));
+
+        if (studyMember.getRole() != StudyMemberRole.LEADER) {
+            throw new CustomException(ErrorCode.STUDY_ACCESS_DENIED);
+        }
+
+        studyRepository.delete(study);
     }
 }

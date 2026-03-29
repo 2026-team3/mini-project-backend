@@ -25,7 +25,10 @@ public enum ErrorCode {
     STUDY_LEADER_CANNOT_APPLY(HttpStatus.BAD_REQUEST, "S004", "방장은 스터디에 신청할 수 없습니다."),
     STUDY_ACCESS_DENIED(HttpStatus.FORBIDDEN, "S005", "스터디에 대한 권한이 없습니다."),
     STUDY_APPLICATION_ALREADY_PROCESSED(HttpStatus.BAD_REQUEST, "S006", "이미 처리된 신청입니다."),
-    STUDY_FULL(HttpStatus.BAD_REQUEST, "S007", "스터디 정원이 초과되었습니다.");
+    STUDY_FULL(HttpStatus.BAD_REQUEST, "S007", "스터디 정원이 초과되었습니다."),
+    STUDY_MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "S008", "스터디 멤버를 찾을 수 없습니다."),
+    INVALID_STUDY_MEMBER_STATUS(HttpStatus.BAD_REQUEST, "S009", "스터디 멤버 상태가 올바르지 않습니다."),
+    LEADER_CANNOT_LEAVE_STUDY(HttpStatus.BAD_REQUEST, "S010", "스터디장은 스터디를 나갈 수 없습니다.");
 
     private final HttpStatus status;
     private final String code;

@@ -18,4 +18,8 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Long> 
     Integer countByStudyAndStatus(Study study, StudyMemberStatus status);
 
     Optional<StudyMember> findByIdAndStudy(Long id, Study study);
+
+    List<StudyMember> findByUserAndStatus(User user, StudyMemberStatus status);
+
+    Optional<StudyMember> findByStudyAndUser(Study study, User user);
 }
