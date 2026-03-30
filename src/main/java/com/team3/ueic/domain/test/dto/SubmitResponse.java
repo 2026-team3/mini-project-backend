@@ -14,5 +14,5 @@ public class SubmitResponse {
     private WeakType weakType;     // 취약 유형
     private String message;
 
-    private Map<String, Long> correctCountByType; // 분야별 맞춘 개수
+    private Map<WeakType, Long> correctCountByType;
 }

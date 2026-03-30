@@ -191,12 +191,7 @@ public class QuestionService {
         }
 
         // ================== 분야별 맞춘 개수 ==================
-        Map<WeakType, Long> result = getCorrectCountByType(userId);
-
-        Map<String, Long> correctCountByType = new HashMap<>();
-        for (Map.Entry<WeakType, Long> entry : result.entrySet()) {
-            correctCountByType.put(entry.getKey().getLabel(), entry.getValue());
-        }
+        Map<WeakType, Long> correctCountByType = getCorrectCountByType(userId);
 
         int totalCount = answers.size();
 
@@ -249,13 +244,16 @@ public class QuestionService {
 
         Map<WeakType, Long> map = new EnumMap<>(WeakType.class);
 
+        // 모든 타입 0 초기화
         for (WeakType type : WeakType.values()) {
             map.put(type, 0L);
         }
 
+        // 조회 결과 반영
         for (Object[] row : results) {
             WeakType type = (WeakType) row[0];
-            Long count = (Long) row[1];
+            Long count = ((Number) row[1]).longValue(); // 🔥 중요
+
             map.put(type, count);
         }
 
