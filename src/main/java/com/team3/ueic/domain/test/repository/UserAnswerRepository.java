@@ -18,17 +18,17 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
 
     // =================== 최신 기록 기준 유형별 맞춘 개수 ===================
     @Query("""
-        SELECT a.question.weakType, COUNT(a)
-        FROM UserAnswer a
-        WHERE a.userId = :userId
-          AND a.createdAt IN (
-              SELECT MAX(u.createdAt)
-              FROM UserAnswer u
-              WHERE u.userId = :userId
-              GROUP BY u.question.id
-          )
-          AND a.correct = true
-        GROUP BY a.question.weakType
-    """)
+    SELECT a.question.weakType, COUNT(a)
+    FROM UserAnswer a
+    WHERE a.userId = :userId
+      AND a.correct = true
+      AND a.createdAt = (
+          SELECT MAX(u.createdAt)
+          FROM UserAnswer u
+          WHERE u.userId = a.userId
+            AND u.question.id = a.question.id
+      )
+    GROUP BY a.question.weakType
+""")
     List<Object[]> countLatestCorrectByType(@Param("userId") Long userId);
 }
