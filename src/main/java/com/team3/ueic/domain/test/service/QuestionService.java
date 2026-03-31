@@ -144,6 +144,14 @@ public class QuestionService {
 
         int correctCount = 0;
 
+        //  이번 제출 기준 통계용
+        Map<WeakType, Long> correctCountByType = new EnumMap<>(WeakType.class);
+
+        // 0 초기화
+        for (WeakType type : WeakType.values()) {
+            correctCountByType.put(type, 0L);
+        }
+
         for (AnswerRequest answer : answers) {
 
             Question question = questionRepository.findById(answer.getQuestionId())
@@ -159,7 +167,14 @@ public class QuestionService {
             boolean isCorrect = question.getAnswerChoice().getId()
                     .equals(answer.getChoiceId());
 
-            if (isCorrect) correctCount++;
+            // ================== 정답 카운트 ==================
+            if (isCorrect) {
+                correctCount++;
+
+                //  이번 제출 기준 WeakType 카운트
+                WeakType type = question.getWeakType();
+                correctCountByType.put(type, correctCountByType.get(type) + 1);
+            }
 
             // ================== 중복 답안 처리 ==================
             UserAnswer existingAnswer = userAnswerRepository
@@ -179,7 +194,7 @@ public class QuestionService {
             }
         }
 
-        // ================== 취약 유형 ==================
+        // ================== 취약 유형 (전체 기록 기준 유지) ==================
         WeakType weakType = findWeakType(userId);
 
         // ================== 프로필 업데이트 ==================
@@ -188,14 +203,6 @@ public class QuestionService {
 
         if (weakType != null) {
             profile.updateWeakType(weakType);
-        }
-
-        // ================== 분야별 맞춘 개수 ==================
-        Map<WeakType, Long> result = getCorrectCountByType(userId);
-
-        Map<String, Long> correctCountByType = new HashMap<>();
-        for (Map.Entry<WeakType, Long> entry : result.entrySet()) {
-            correctCountByType.put(entry.getKey().getLabel(), entry.getValue());
         }
 
         int totalCount = answers.size();
@@ -249,13 +256,16 @@ public class QuestionService {
 
         Map<WeakType, Long> map = new EnumMap<>(WeakType.class);
 
+        // 모든 타입 0 초기화
         for (WeakType type : WeakType.values()) {
             map.put(type, 0L);
         }
 
+        // 조회 결과 반영
         for (Object[] row : results) {
             WeakType type = (WeakType) row[0];
-            Long count = (Long) row[1];
+            Long count = ((Number) row[1]).longValue(); //
+
             map.put(type, count);
         }
 
