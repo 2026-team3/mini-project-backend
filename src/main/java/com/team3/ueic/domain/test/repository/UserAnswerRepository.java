@@ -21,7 +21,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
     SELECT a.question.weakType, COUNT(a)
     FROM UserAnswer a
     WHERE a.userId = :userId
-      AND a.correct = true
+      AND a.correct = false
       AND a.createdAt = (
           SELECT MAX(u.createdAt)
           FROM UserAnswer u
